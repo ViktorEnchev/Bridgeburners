@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getLeaderboard, updateLeaderboard } from "src/api/auth";
+import { getLeaderboard } from "src/api/user";
+import { updateLeaderboard } from "src/api/admin";
 import type { User } from "src/api/user";
 import { useUser } from "src/context/UserContext";
 

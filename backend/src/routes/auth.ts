@@ -3,19 +3,12 @@ import {
   createUserWithPassword,
   verifyPassword,
   getUserByEmail,
-  updateDisplayName,
-  getAllNonAdminUsers,
-  getLeaderboard,
-  bulkUpdateScores,
-  permitUser,
-  revokeUser,
   generateToken,
   createSession,
   deleteSessionByToken,
   toPublicUser,
 } from "../db/users";
 import { authenticate } from "../middleware/authenticate";
-import { requirePermitted } from "../middleware/requirePermitted";
 import { Role } from "@prisma/client";
 
 export const router = Router();
@@ -80,89 +73,4 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
 router.post("/logout", authenticate, async (req: Request, res: Response): Promise<void> => {
   await deleteSessionByToken(req.sessionToken!);
   res.status(200).json({ message: "Logged out" });
-});
-
-router.get("/user", authenticate, (req: Request, res: Response): void => {
-  res.status(200).json({ user: toPublicUser(req.user!) });
-});
-
-router.patch("/user", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  const { displayName } = req.body;
-  const updated = await updateDisplayName(req.user!.id, displayName ?? "");
-  res.status(200).json({ user: toPublicUser(updated) });
-});
-
-router.get("/leaderboard", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  const users = await getLeaderboard();
-  res.status(200).json({ users });
-});
-
-router.patch("/leaderboard", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  if (req.user!.role !== "admin") {
-    res.status(403).json({ error: "Forbidden" });
-    return;
-  }
-
-  const { scores } = req.body as { scores: { email: string; score: number }[] };
-
-  if (!Array.isArray(scores) || scores.some((s) => typeof s.email !== "string" || typeof s.score !== "number")) {
-    res.status(400).json({ error: "scores must be an array of { email, score }" });
-    return;
-  }
-
-  await bulkUpdateScores(scores);
-  const users = await getLeaderboard();
-  res.status(200).json({ users });
-});
-
-router.get("/users", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  if (req.user!.role !== "admin") {
-    res.status(403).json({ error: "Forbidden" });
-    return;
-  }
-
-  const users = await getAllNonAdminUsers();
-  res.status(200).json({ users: users.map(toPublicUser) });
-});
-
-router.post("/permit", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  if (req.user!.role !== "admin") {
-    res.status(403).json({ error: "Forbidden" });
-    return;
-  }
-
-  const { email } = req.body;
-  if (!email) {
-    res.status(400).json({ error: "email is required" });
-    return;
-  }
-
-  const user = await permitUser(email);
-  if (!user) {
-    res.status(404).json({ error: "User not found" });
-    return;
-  }
-
-  res.status(200).json({ user: toPublicUser(user) });
-});
-
-router.post("/revoke", authenticate, requirePermitted, async (req: Request, res: Response): Promise<void> => {
-  if (req.user!.role !== "admin") {
-    res.status(403).json({ error: "Forbidden" });
-    return;
-  }
-
-  const { email } = req.body;
-  if (!email) {
-    res.status(400).json({ error: "email is required" });
-    return;
-  }
-
-  const user = await revokeUser(email);
-  if (!user) {
-    res.status(404).json({ error: "User not found" });
-    return;
-  }
-
-  res.status(200).json({ user: toPublicUser(user) });
 });

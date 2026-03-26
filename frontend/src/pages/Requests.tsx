@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers, permitAccess, revokeAccess } from "src/api/auth";
+import { getUsers, permitAccess, revokeAccess } from "src/api/admin";
 import type { User } from "src/api/user";
 
 export default function Requests() {
