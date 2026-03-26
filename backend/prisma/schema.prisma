@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  displayName String?
+  password    String
+  score       Int       @default(0)
+  permitted   Boolean   @default(false)
+  role        Role      @default(user)
+  sessions    Session[]
+  messages    Message[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String      @id @default(uuid())
+  content   String
+  type      MessageType @default(message)
+  sender    User        @relation(fields: [senderId], references: [id])
+  senderId  String
+  createdAt DateTime    @default(now())
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum MessageType {
+  message
+  attachment
+}
