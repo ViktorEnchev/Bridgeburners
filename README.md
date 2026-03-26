@@ -69,12 +69,11 @@ npm run dev            # starts on http://localhost:5173
 
 ### Backend (`.env`)
 
-| Variable       | Description                                                                          |
 | -------------- | ------------------------------------------------------------------------------------ |
-| `PORT`         | Port to run the server on (default `3000`)                                           |
-| `API_SECRET`   | Shared secret required on every request via `x-api-secret` header                    |
+| `PORT` | Port to run the server on (default `3000`) |
+| `API_SECRET` | Shared secret required on every request via `x-api-secret` header |
 | `ADMIN_EMAILS` | Comma-separated list of emails that are automatically granted admin role on register |
-| `DATABASE_URL` | PostgreSQL connection string                                                         |
+| `DATABASE_URL` | PostgreSQL connection string |
 
 ### Frontend (`.env`)
 
