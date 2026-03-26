@@ -2,7 +2,7 @@ import ClockIcon from "src/assets/icons/ClockIcon";
 
 export default function RequestedAccess() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-full">
       <div className="w-full max-w-sm px-4 text-center">
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-8 py-10 flex flex-col items-center gap-5">
           <div className="flex items-center justify-center w-14 h-14 rounded-full bg-violet-100">

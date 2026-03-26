@@ -31,12 +31,12 @@ export default function AppLayout() {
   const showNav = Boolean(user?.permitted);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-screen overflow-hidden bg-gray-50">
       <TopBar
         showNav={showNav}
         onLogout={user ? handleLogout : undefined}
       />
-      <div className="pt-14">
+      <div className="h-full pt-14 overflow-y-auto">
         <Outlet />
       </div>
     </div>

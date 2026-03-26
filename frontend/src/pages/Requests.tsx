@@ -44,7 +44,7 @@ export default function Requests() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
+    <div className="flex items-center justify-center min-h-full px-4">
       <div className="w-full max-w-lg">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Users</h2>
 

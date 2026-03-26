@@ -49,7 +49,7 @@ export default function Home() {
   const sorted = [...users].sort((a, b) => b.score - a.score);
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
+    <div className="flex items-center justify-center min-h-full px-4">
       <div className="w-full max-w-md">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h2>
 
