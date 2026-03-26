@@ -40,11 +40,12 @@ export async function findUserByToken(token: string): Promise<User | null> {
 export async function createUserWithPassword(
   email: string,
   password: string,
-  role: Role
+  role: Role,
+  displayName?: string
 ): Promise<User> {
   const hashed = await bcrypt.hash(password, SALT_ROUNDS);
   return prisma.user.create({
-    data: { email, password: hashed, role, permitted: role === "admin" },
+    data: { email, password: hashed, role, permitted: role === "admin", displayName: displayName || null },
   });
 }
 
@@ -72,7 +73,7 @@ export async function updateDisplayName(
 ): Promise<User> {
   return prisma.user.update({
     where: { id: userId },
-    data: { displayName: { set: displayName ?? null } },
+    data: { displayName: { set: displayName || null } },
   });
 }
 

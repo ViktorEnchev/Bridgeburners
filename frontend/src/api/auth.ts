@@ -1,5 +1,5 @@
-import { api } from "../lib/api";
-import type { User } from "./user";
+import { api } from "src/lib/api";
+import type { User } from "src/api/user";
 
 interface AuthError {
   error: string;
@@ -7,12 +7,13 @@ interface AuthError {
 
 export async function register(
   email: string,
-  password: string
+  password: string,
+  displayName?: string
 ): Promise<{ ok: true; user: User; token: string } | { ok: false; error: string }> {
   try {
     const res = await api("/auth/register", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, displayName: displayName || undefined }),
     });
 
     const data: { user: User; token: string } & AuthError = await res.json();

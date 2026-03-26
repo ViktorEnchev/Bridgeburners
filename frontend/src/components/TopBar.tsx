@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { useUser } from "../context/UserContext";
-import { useWebSocket } from "../context/WebSocketContext";
+import { useUser } from "src/context/UserContext";
+import { useWebSocket } from "src/context/WebSocketContext";
+import CloseIcon from "src/assets/icons/CloseIcon";
 
 interface TopBarProps {
   onLogout?: () => void;
@@ -101,20 +102,7 @@ export default function TopBar({ onLogout, showNav = false }: TopBarProps) {
             className="text-gray-400 hover:text-gray-700 transition cursor-pointer"
             aria-label="Close menu"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <CloseIcon className="w-5 h-5" />
           </button>
         </div>
 

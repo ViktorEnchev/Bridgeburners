@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import type { User } from "../api/user";
-import { getUser } from "../api/user";
+import type { User } from "src/api/user";
+import { getUser } from "src/api/user";
 
 interface UserContextType {
   user: User | null;

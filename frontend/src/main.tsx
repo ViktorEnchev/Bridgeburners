@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
-import { UserProvider } from "./context/UserContext.tsx";
-import { WebSocketProvider } from "./context/WebSocketContext.tsx";
+import App from "src/App";
+import { UserProvider } from "src/context/UserContext";
+import { WebSocketProvider } from "src/context/WebSocketContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

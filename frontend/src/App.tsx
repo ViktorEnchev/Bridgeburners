@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AppLayout from "./layouts/AppLayout";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RequestedAccess from "./pages/RequestedAccess";
-import Home from "./pages/Home";
-import Chat from "./pages/Chat";
-import Settings from "./pages/Settings";
-import Requests from "./pages/Requests";
+import AppLayout from "src/layouts/AppLayout";
+import Login from "src/pages/Login";
+import Register from "src/pages/Register";
+import RequestedAccess from "src/pages/RequestedAccess";
+import Home from "src/pages/Home";
+import Chat from "src/pages/Chat";
+import Settings from "src/pages/Settings";
+import Requests from "src/pages/Requests";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useUser } from "../context/UserContext";
-import { updateUser } from "../api/user";
+import { useUser } from "src/context/UserContext";
+import { updateUser } from "src/api/user";
 
 export default function Settings() {
   const { user, setUser } = useUser();

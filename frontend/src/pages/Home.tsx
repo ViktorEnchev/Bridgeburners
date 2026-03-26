@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getLeaderboard, updateLeaderboard } from "../api/auth";
-import type { User } from "../api/user";
-import { useUser } from "../context/UserContext";
+import { getLeaderboard, updateLeaderboard } from "src/api/auth";
+import type { User } from "src/api/user";
+import { useUser } from "src/context/UserContext";
 
 export default function Home() {
   const { user: me } = useUser();

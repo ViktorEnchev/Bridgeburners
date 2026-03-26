@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { useUser } from "./UserContext";
-import type { Message } from "../api/chat";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useUser } from "src/context/UserContext";
+import type { Message } from "src/api/chat";
 
 interface WebSocketContextType {
   lastMessage: Message | null;
@@ -36,14 +36,6 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
-    ws.onopen = () => {
-      console.log("[WS] Connected");
-    };
-
-    ws.onclose = () => {
-      console.log("[WS] Disconnected");
-    };
-
     ws.onmessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data as string);
@@ -67,9 +59,9 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     document.title = unreadCount > 0 ? `(${unreadCount === 9 ? "9+" : unreadCount}) Bridgeburners` : "Bridgeburners";
   }, [unreadCount]);
 
-  function clearUnread() {
+  const clearUnread = useCallback(() => {
     setUnreadCount(0);
-  }
+  }, []);
 
   return (
     <WebSocketContext.Provider

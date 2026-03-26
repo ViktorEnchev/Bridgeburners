@@ -2,9 +2,12 @@
   "name": "bridgeburners-backend",
   "version": "1.0.0",
   "main": "dist/server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "npx prisma generate && tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {

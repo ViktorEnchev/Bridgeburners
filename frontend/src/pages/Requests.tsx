@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUsers, permitAccess, revokeAccess } from "../api/auth";
-import type { User } from "../api/user";
+import { getUsers, permitAccess, revokeAccess } from "src/api/auth";
+import type { User } from "src/api/user";
 
 export default function Requests() {
   const [users, setUsers] = useState<User[]>([]);

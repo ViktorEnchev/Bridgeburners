@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useUser } from "../context/UserContext";
-import { useWebSocket } from "../context/WebSocketContext";
-import { getMessages, sendMessage } from "../api/chat";
-import type { Message } from "../api/chat";
+import { useUser } from "src/context/UserContext";
+import { useWebSocket } from "src/context/WebSocketContext";
+import { getMessages, sendMessage } from "src/api/chat";
+import type { Message } from "src/api/chat";
+import SendIcon from "src/assets/icons/SendIcon";
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -72,7 +73,7 @@ export default function Chat() {
         if (el) el.scrollTop = el.scrollHeight;
       });
     });
-  }, []);
+  }, [clearUnread]);
 
   useEffect(() => {
     if (loading || loadingMore) return;
@@ -95,7 +96,7 @@ export default function Chat() {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, []);
+  }, [loadMore]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -208,14 +209,7 @@ export default function Chat() {
             className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer shrink-0"
             aria-label="Send"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 translate-x-px"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405z" />
-            </svg>
+            <SendIcon className="w-4 h-4 translate-x-px" />
           </button>
         </form>
       </div>

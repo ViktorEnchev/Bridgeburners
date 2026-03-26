@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
-import TopBar from "../components/TopBar";
-import { useUser } from "../context/UserContext";
-import { logout } from "../api/auth";
+import TopBar from "src/components/TopBar";
+import { useUser } from "src/context/UserContext";
+import { logout } from "src/api/auth";
 
 const PUBLIC_ROUTES = ["/", "/register"];
 const AUTH_ROUTES = ["/home", "/chat", "/settings", "/requests"];

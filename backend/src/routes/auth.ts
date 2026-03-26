@@ -47,7 +47,8 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
   }
 
   const role: Role = getAdminEmails().includes(email.toLowerCase()) ? "admin" : "user";
-  const user = await createUserWithPassword(email.toLowerCase(), password, role);
+  const displayName = typeof req.body.displayName === "string" ? req.body.displayName.trim() : undefined;
+  const user = await createUserWithPassword(email.toLowerCase(), password, role, displayName || undefined);
 
   const token = generateToken();
   await createSession(user.id, token);

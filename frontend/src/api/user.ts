@@ -1,4 +1,4 @@
-import { api } from "../lib/api";
+import { api } from "src/lib/api";
 
 export interface User {
   email: string;

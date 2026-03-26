@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { register } from "../api/auth";
-import { useUser } from "../context/UserContext";
+import { register } from "src/api/auth";
+import { useUser } from "src/context/UserContext";
+import PasswordInput from "src/components/PasswordInput";
 
 export default function Register() {
   const navigate = useNavigate();
   const { setUser } = useUser();
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +25,7 @@ export default function Register() {
 
     setLoading(true);
 
-    const result = await register(email, password);
+    const result = await register(email, password, displayName.trim() || undefined);
 
     if (!result.ok) {
       setError(result.error);
@@ -69,18 +71,30 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1.5">
+            <label htmlFor="displayName" className="text-sm font-medium text-gray-700">
+              Display name <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <input
+              id="displayName"
+              type="text"
+              autoComplete="nickname"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="How should we call you?"
+              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
+            <PasswordInput
               id="password"
-              type="password"
+              value={password}
+              onChange={setPassword}
               autoComplete="new-password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
             />
           </div>
 
@@ -88,15 +102,12 @@ export default function Register() {
             <label htmlFor="confirm" className="text-sm font-medium text-gray-700">
               Confirm password
             </label>
-            <input
+            <PasswordInput
               id="confirm"
-              type="password"
+              value={confirm}
+              onChange={setConfirm}
               autoComplete="new-password"
               required
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
             />
           </div>
 
