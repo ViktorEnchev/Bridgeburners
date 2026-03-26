@@ -4,7 +4,7 @@ import { useUser } from "src/context/UserContext";
 import { logout } from "src/api/auth";
 
 const PUBLIC_ROUTES = ["/", "/register"];
-const AUTH_ROUTES = ["/home", "/chat", "/settings", "/requests"];
+const AUTH_ROUTES = ["/home", "/chat", "/map", "/settings", "/requests"];
 const PENDING_ROUTES = ["/requested-access"];
 
 export default function AppLayout() {
@@ -31,12 +31,12 @@ export default function AppLayout() {
   const showNav = Boolean(user?.permitted);
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-50">
+    <div className="h-screen flex flex-col bg-gray-50">
       <TopBar
         showNav={showNav}
         onLogout={user ? handleLogout : undefined}
       />
-      <div className="h-full pt-14 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
     </div>

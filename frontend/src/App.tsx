@@ -6,6 +6,7 @@ import RequestedAccess from "src/pages/RequestedAccess";
 import Home from "src/pages/Home";
 import Chat from "src/pages/Chat";
 import Settings from "src/pages/Settings";
+import Map from "src/pages/Map";
 import Requests from "src/pages/Requests";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/requested-access" element={<RequestedAccess />} />
           <Route path="/home" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="*" element={<Login />} />

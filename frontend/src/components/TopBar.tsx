@@ -12,6 +12,7 @@ interface TopBarProps {
 const baseNavItems = [
   { to: "/home", label: "Home" },
   { to: "/chat", label: "Chat" },
+  { to: "/map", label: "Map" },
   { to: "/settings", label: "Settings" },
 ];
 
@@ -46,7 +47,7 @@ export default function TopBar({ onLogout, showNav = false }: TopBarProps) {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-10 h-14 bg-white border-b border-gray-200 flex items-center justify-center px-4">
+      <header className="shrink-0 z-10 h-14 bg-white border-b border-gray-200 flex items-center justify-center px-4">
         {showNav && (
           <div className="absolute left-4">
             <button
