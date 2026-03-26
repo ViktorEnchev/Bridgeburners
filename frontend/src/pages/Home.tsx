@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { getLeaderboard } from "src/api/user";
 import { updateLeaderboard } from "src/api/admin";
 import type { User } from "src/api/user";
@@ -12,7 +13,6 @@ export default function Home() {
   const [scores, setScores] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     getLeaderboard().then((res) => {
@@ -32,7 +32,6 @@ export default function Home() {
 
   async function handleSave() {
     setSaving(true);
-    setError("");
 
     const scoreList = Object.entries(scores).map(([email, score]) => ({ email, score }));
     const res = await updateLeaderboard(scoreList);
@@ -40,8 +39,9 @@ export default function Home() {
     if (res.ok) {
       setUsers(res.users);
       setScores(Object.fromEntries(res.users.map((u) => [u.email, u.score])));
+      toast.success("Leaderboard updated");
     } else {
-      setError(res.error);
+      toast.error(res.error);
     }
 
     setSaving(false);
@@ -98,8 +98,6 @@ export default function Home() {
             ))
           )}
         </div>
-
-        {error && <p className="text-sm text-red-500 mt-3">{error}</p>}
 
         {isAdmin && hasChanged && (
           <div className="mt-4 flex gap-3">

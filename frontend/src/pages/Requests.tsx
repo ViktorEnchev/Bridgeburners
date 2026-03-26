@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { getUsers, permitAccess, revokeAccess } from "src/api/admin";
 import type { User } from "src/api/user";
 
@@ -25,9 +26,10 @@ export default function Requests() {
     setActing(email);
     const result = await permitAccess(email);
     if (result.ok) {
-      setUsers((prev) =>
-        prev.map((u) => (u.email === email ? result.user : u))
-      );
+      setUsers((prev) => prev.map((u) => (u.email === email ? result.user : u)));
+      toast.success(`Access granted to ${email}`);
+    } else {
+      toast.error(result.error);
     }
     setActing(null);
   }
@@ -36,9 +38,10 @@ export default function Requests() {
     setActing(email);
     const result = await revokeAccess(email);
     if (result.ok) {
-      setUsers((prev) =>
-        prev.map((u) => (u.email === email ? result.user : u))
-      );
+      setUsers((prev) => prev.map((u) => (u.email === email ? result.user : u)));
+      toast.success(`Access revoked for ${email}`);
+    } else {
+      toast.error(result.error);
     }
     setActing(null);
   }

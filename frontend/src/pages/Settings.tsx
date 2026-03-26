@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { useUser } from "src/context/UserContext";
 import { updateUser, changePassword } from "src/api/user";
 import PasswordInput from "src/components/PasswordInput";
@@ -10,7 +11,6 @@ export default function Settings() {
 
   const [displayName, setDisplayName] = useState(savedDisplayName);
   const [savingName, setSavingName] = useState(false);
-  const [nameError, setNameError] = useState("");
   const hasNameChanged = displayName !== savedDisplayName;
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -18,20 +18,19 @@ export default function Settings() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [savingPassword, setSavingPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [passwordSuccess, setPasswordSuccess] = useState(false);
   const hasPasswordFields = currentPassword || newPassword || confirmPassword;
 
   async function handleSaveName() {
     if (!user) return;
-    setNameError("");
     setSavingName(true);
 
     const result = await updateUser({ displayName: displayName.trim() });
 
     if (!result.ok) {
-      setNameError(result.error);
+      toast.error(result.error);
     } else {
       setUser(result.user);
+      toast.success("Display name updated");
     }
 
     setSavingName(false);
@@ -39,7 +38,6 @@ export default function Settings() {
 
   async function handleSavePassword() {
     setPasswordError("");
-    setPasswordSuccess(false);
 
     if (newPassword !== confirmPassword) {
       setPasswordError("Passwords do not match");
@@ -50,9 +48,9 @@ export default function Settings() {
     const result = await changePassword(currentPassword, newPassword);
 
     if (!result.ok) {
-      setPasswordError(result.error);
+      toast.error(result.error);
     } else {
-      setPasswordSuccess(true);
+      toast.success("Password updated successfully");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -90,8 +88,6 @@ export default function Settings() {
               className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition"
             />
           </div>
-
-          {nameError && <p className="text-sm text-red-500">{nameError}</p>}
 
           {hasNameChanged && (
             <button
@@ -144,7 +140,6 @@ export default function Settings() {
           </div>
 
           {passwordError && <p className="text-sm text-red-500">{passwordError}</p>}
-          {passwordSuccess && <p className="text-sm text-green-600">Password updated successfully</p>}
 
           {hasPasswordFields && (
             <button

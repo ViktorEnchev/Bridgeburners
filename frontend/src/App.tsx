@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "sonner";
 import AppLayout from "src/layouts/AppLayout";
 import Login from "src/pages/Login";
 import Register from "src/pages/Register";
@@ -12,6 +13,7 @@ import Requests from "src/pages/Requests";
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="bottom-right" richColors />
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Login />} />
